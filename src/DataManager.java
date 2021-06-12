@@ -9,6 +9,7 @@ class DataManager {
 
         list_menu.put("sugarCoffee", new AbsDataManager(100, 200, 30));
         list_menu.put("milkCoffee", new AbsDataManager(200, 200, 30));
+        list_menu.put("blackCoffee", new AbsDataManager(50, 200, 30));
 
         setMinPrice();
     }
