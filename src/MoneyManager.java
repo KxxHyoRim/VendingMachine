@@ -4,10 +4,10 @@ import java.util.Set;
 
 public class MoneyManager {
     static int InputTotalCash = 0;
-    static int coin50 = 200;
-    static int coin100 = 200;
-    static int coin500 = 200;
-    static int coin1000 = 200;
+    static int coin50 = 10;
+    static int coin100 = 10;
+    static int coin500 = 10;
+    static int coin1000 = 10;
     static int input_50won=0;
     static int input_100won=0;
     static int input_500won=0;
@@ -70,9 +70,9 @@ public class MoneyManager {
         int tmp_50 = change/50;
 
         if(tmp_50<=coin50 && tmp_100<=coin100 && tmp_500<=coin500 && tmp_1000<=coin1000)
-            return true;
-        else
             return false;
+        else
+            return true;
     }
 
     static void makeReturnCash(int cash){

@@ -8,9 +8,9 @@ public class Controller {
     int menuNum;
     int change;
     int price;
-    boolean Anavailable;
+    boolean noChange;
+    boolean noCup;
     DataManager dm;
-    MoneyManager mm;
     HashMap<String, Boolean> bool_ledOn = new HashMap<>();
     HashMap<String, AbsDataManager> list_menu = new HashMap<>();
     Set<String> menu_keys;
@@ -18,7 +18,7 @@ public class Controller {
     Controller() {
         dm = new DataManager();
         list_menu =dm.list_menu;
-        Anavailable = false;
+        noChange = false;
 
         //LED state 초기화
         menu_keys = list_menu.keySet();
@@ -46,7 +46,7 @@ public class Controller {
     }
 
 
-    public void getCustomerInput(int cash, String selection){
+     void getCustomerInput(int cash, String selection){
         price = dm.checkSelectiedItemPrice(selection);
         checkForChange(cash, price);
     }
@@ -54,8 +54,18 @@ public class Controller {
     public void checkForChange(int cash, int price){
         change = cash - price;
 
-        if(cash > price)
-            noChange= mm.checkChangeAvailable();
+        if (cash > price)
+            noChange= MoneyManager.checkChangeAvailable(change);
+
+        if (noChange)
+        {
+            MoneyManager.makeReturnCash(cash);
+            //UserPanel.displayPrompt("No Change");
+        }
+        else {
+            noCup = CupManager.checkCupExists();
+        }
+
     }
 }
 
