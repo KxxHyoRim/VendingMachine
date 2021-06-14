@@ -53,8 +53,8 @@ public class Controller {
     public void checkForChange(int cash, int price){
         change = cash - price;
 
-        if(cash > price)
-            noChange= mm.checkChangeAvailable();
+//        if(cash > price)
+//            noChange= mm.checkChangeAvailable();
     }
 }
 

@@ -1,12 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.HashMap;
+import java.util.Set;
 
 public class UserPanel extends JFrame {
 
     private MyPanel panel = new MyPanel();
     private DataManager dm = new DataManager();
     HashMap<String, AbsDataManager> list_menu = dm.list_menu;
+    HashMap<String, String> EngToKor = dm.EngToKor;
+
+
+    class MyItemListener implements ItemListener {
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+
+        }
+    }
 
 
     public UserPanel(){
@@ -17,11 +30,20 @@ public class UserPanel extends JFrame {
         panel.setLayout(null);
         setContentPane(panel);
 
-        System.out.println(list_menu.keySet());
+        Set<String> menuNameSet = list_menu.keySet();       // dataManager의 메뉴 이름 가져오기
+        String[] menuName = new String[menuNameSet.size()]; // 메뉴 영어 이름 set을 Array로 변환
+        menuNameSet.toArray(menuName);
 
-        new oneMenu(147,210, "Sugar", list_menu.get("Sugar").price);
-        new oneMenu(210,210, "Milk",list_menu.get("Milk").price);
-        new oneMenu(273,210, "Black",list_menu.get("Black").price);
+        new oneMenu(147,210,EngToKor.get(menuName[0]) , list_menu.get(menuName[0]).price);
+        new oneMenu(210,210,EngToKor.get(menuName[1]) , list_menu.get(menuName[1]).price);
+        new oneMenu(273,210,EngToKor.get(menuName[2]) , list_menu.get(menuName[2]).price);
+        new oneMenu(147,361,EngToKor.get(menuName[3]) , list_menu.get(menuName[3]).price);
+        new oneMenu(210,361,EngToKor.get(menuName[4]) , list_menu.get(menuName[4]).price);
+        new oneMenu(273,361,EngToKor.get(menuName[5]) , list_menu.get(menuName[5]).price);
+        new oneMenu(147,512,EngToKor.get(menuName[6]) , list_menu.get(menuName[6]).price);
+        new oneMenu(210,512,EngToKor.get(menuName[7]) , list_menu.get(menuName[7]).price);
+        new oneMenu(273,512,EngToKor.get(menuName[8]) , list_menu.get(menuName[8]).price);
+
 
         setAlwaysOnTop(true);
         setLocation(1300, 0);
@@ -34,24 +56,24 @@ public class UserPanel extends JFrame {
         oneMenu(int locX, int locY, String n, int p){
 
             JLabel name = new JLabel();
-            name.setFont(new Font("Arial", Font.BOLD, 15));
+            name.setFont(new Font("고딕체", Font.BOLD, 12));
             name.setHorizontalAlignment(SwingConstants.CENTER);
             name.setText(n);
 //            name.setBorder(BorderFactory.createLineBorder(Color.black));
             name.setBackground(Color.BLUE);
             name.setOpaque(false);
             name.setForeground(Color.BLACK);
-            name.setSize(50, 15);
+            name.setSize(55, 15);
             name.setLocation(locX, locY);
             panel.add(name);
 
             JLabel price = new JLabel();
-            price.setFont(new Font("Arial", Font.PLAIN, 13));
+            price.setFont(new Font("고딕체", Font.PLAIN, 13));
             price.setHorizontalAlignment(SwingConstants.CENTER);
             price.setText(String.valueOf(p));
             price.setBackground(Color.gray);
             price.setForeground(Color.BLACK);
-            price.setSize(50, 15);
+            price.setSize(55, 15);
             price.setLocation(locX, locY + 25);
             panel.add(price);
 
@@ -65,9 +87,9 @@ public class UserPanel extends JFrame {
             c1.setLocation(locX, locY + 60);
             panel.add(c1);
         }
-
-
     }
+
+
 
     class MyPanel extends JPanel{
         private ImageIcon icon = new ImageIcon("vendingMachineBackground.png");
