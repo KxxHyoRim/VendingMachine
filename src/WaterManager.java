@@ -8,8 +8,15 @@ public class WaterManager {
 
     static boolean checkNeededWaterAmount(int needed_waterAmount) {
         if ( needed_waterAmount <= curWaterAmount )
+        {
+            decreaseWaterAmount();
             return true;
+        }
         else
             return false;
+    }
+
+    static void decreaseWaterAmount(){
+        curWaterAmount -= 50;
     }
 }

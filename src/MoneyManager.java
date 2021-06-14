@@ -73,12 +73,20 @@ public class MoneyManager {
             return true;
     }
 
-    static void makeReturnCash(int cash){
+    static void makeReturnCash(){
+
+        //초기화
         InputTotalCash = 0;
-        coin1000 -= input_50won;
+        coin1000 -= input_1000won;
         coin500 -= input_500won;
         coin100 -= input_100won;
         coin50 -= input_50won;
-        //UserPanel.receive(cash);
+
+        //UserPanel.receive();
+
+        input_1000won = 0;
+        input_500won = 0;
+        input_100won = 0;
+        input_50won = 0;
     }
 }

@@ -18,6 +18,7 @@ public class Controller {
 
     static boolean noChange;
     static boolean noCup;
+    static boolean noIngredient;
 
     static HashMap<String, Boolean> bool_ledOn = new HashMap<>();
     static HashMap<String, AbsDataManager> list_menu = new HashMap<>();
@@ -35,15 +36,14 @@ public class Controller {
             String key = it.next();
             bool_ledOn.put(key,false);
         }
-
     }
 
     static void Run(){
-
 //        if(noCup)
 //        {
-//            UserPanel.receive(MoneyManager.InputTotalCash);
+//            MoneyManager.makeReturnCash();
 //            UserPanel.displayPrompt("No Cup");
+//            return;
 //        }
 //        else
 //            needed_waterAmount = DataManager.checkNeededWaterAmount();
@@ -56,7 +56,6 @@ public class Controller {
 //        else{
 //            DataManager.checkNeededIngredient(selection);
 //        }
-
     }
 
     static void checkLEDon(int cash){
@@ -88,13 +87,14 @@ public class Controller {
 
         if (noChange)
         {
-            MoneyManager.makeReturnCash(cash);
+            MoneyManager.makeReturnCash();
             //UserPanel.displayPrompt("No Change");
         }
         else {
             noCup = !CupManager.checkCupExists();
         }
         Run();
+        return;
     }
 
 
