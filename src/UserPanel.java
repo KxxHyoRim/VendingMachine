@@ -34,26 +34,35 @@ public class UserPanel extends JFrame {
         String[] menuName = new String[menuNameSet.size()]; // 메뉴 영어 이름 set을 Array로 변환
         menuNameSet.toArray(menuName);
 
-        new oneMenu(147,210,EngToKor.get(menuName[0]) , list_menu.get(menuName[0]).price);
-        new oneMenu(210,210,EngToKor.get(menuName[1]) , list_menu.get(menuName[1]).price);
-        new oneMenu(273,210,EngToKor.get(menuName[2]) , list_menu.get(menuName[2]).price);
-        new oneMenu(147,361,EngToKor.get(menuName[3]) , list_menu.get(menuName[3]).price);
-        new oneMenu(210,361,EngToKor.get(menuName[4]) , list_menu.get(menuName[4]).price);
-        new oneMenu(273,361,EngToKor.get(menuName[5]) , list_menu.get(menuName[5]).price);
-        new oneMenu(147,512,EngToKor.get(menuName[6]) , list_menu.get(menuName[6]).price);
-        new oneMenu(210,512,EngToKor.get(menuName[7]) , list_menu.get(menuName[7]).price);
-        new oneMenu(273,512,EngToKor.get(menuName[8]) , list_menu.get(menuName[8]).price);
+        int[] locX = {152, 215, 280,152,215, 280,152,215, 280,};
+        int[] locY = {205, 205, 205, 354,354,354,503, 503, 503 };
+
+        for (int i = 0 ; i < menuName.length; i++){
+            new setMenu(locX[i],locY[i],EngToKor.get(menuName[i]) , list_menu.get(menuName[i]).price);
+
+            // 빨간 LED
+            JButton c1 = new JButton();
+            c1.setFont(new Font("Arial", Font.PLAIN, 20));
+            c1.setText("●");
+            c1.setBackground(Color.BLACK);     // 투명 만들기 전에 배경 지정해줘야됨. 지우면 에러!
+            c1.setOpaque(false);            //배경 투명
+            c1.setForeground(Color.RED);
+            c1.setSize(50, 15);
+            c1.setLocation(locX[i], locY[i] + 60);
+            panel.add(c1);
+
+        }
 
 
         setAlwaysOnTop(true);
-        setLocation(1300, 0);
-        setSize(600, 1200);
+        setLocation(1000, 0);
+        setSize(810, 1080);
         setVisible(true);
 
     }
 
-    class oneMenu extends JFrame{
-        oneMenu(int locX, int locY, String n, int p){
+    class setMenu extends JFrame{
+        setMenu(int locX, int locY, String n, int p){
 
             JLabel name = new JLabel();
             name.setFont(new Font("고딕체", Font.BOLD, 12));
@@ -77,22 +86,14 @@ public class UserPanel extends JFrame {
             price.setLocation(locX, locY + 25);
             panel.add(price);
 
-            JButton c1 = new JButton();
-            c1.setFont(new Font("Arial", Font.PLAIN, 20));
-            c1.setText("●");
-            c1.setBackground(Color.BLUE);
-            c1.setOpaque(false);
-            c1.setForeground(Color.RED);
-            c1.setSize(50, 15);
-            c1.setLocation(locX, locY + 60);
-            panel.add(c1);
+
         }
     }
 
 
 
     class MyPanel extends JPanel{
-        private ImageIcon icon = new ImageIcon("vendingMachineBackground.png");
+        private ImageIcon icon = new ImageIcon("vendingMachineBackground2.png");
         private Image img = icon.getImage();
 
         public void paintComponent(Graphics g){
