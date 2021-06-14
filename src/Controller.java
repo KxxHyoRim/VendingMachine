@@ -1,23 +1,31 @@
+import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Controller {
 
-    int cash;
-    int menuNum;
-    int change;
-    int price;
-    boolean noChange;
-    DataManager dm;
-    MoneyManager mm;
-    HashMap<String, Boolean> bool_ledOn = new HashMap<>();
-    HashMap<String, AbsDataManager> list_menu = new HashMap<>();
-    Set<String> menu_keys;
+    static int change;
+    static int price;
+    static String selection;
+
+    static int needed_waterAmount;
+    static int needed_sugar;
+    static int needed_creamer;
+    static int needed_coffeeBeans;
+    static int needed_yulmu;
+    static int needed_cocoa;
+
+    static boolean noChange;
+    static boolean noCup;
+
+    static HashMap<String, Boolean> bool_ledOn = new HashMap<>();
+    static HashMap<String, AbsDataManager> list_menu = new HashMap<>();
+    static Set<String> menu_keys;
 
     Controller() {
-        dm = new DataManager();
-        list_menu =dm.list_menu;
+        list_menu = DataManager.list_menu;
+        noChange = false;
 
         //LED state 초기화
         menu_keys = list_menu.keySet();
@@ -30,7 +38,28 @@ public class Controller {
 
     }
 
-    public HashMap<String, Boolean> checkLEDon(int cash){
+    static void Run(){
+
+//        if(noCup)
+//        {
+//            UserPanel.receive(MoneyManager.InputTotalCash);
+//            UserPanel.displayPrompt("No Cup");
+//        }
+//        else
+//            needed_waterAmount = DataManager.checkNeededWaterAmount();
+//
+//        if(!WaterManager.checkNeededWaterAmount(needed_waterAmount))
+//        {
+//            UserPanel.receive(MoneyManager.InputTotalCash);
+//            UserPanel.displayPrompt("No Water");
+//        }
+//        else{
+//            DataManager.checkNeededIngredient(selection);
+//        }
+
+    }
+
+    static void checkLEDon(int cash){
         Iterator<String> it = menu_keys.iterator();
 
         while(it.hasNext()){
@@ -41,20 +70,34 @@ public class Controller {
                bool_ledOn.replace(key,true);
            }
         }
-        return bool_ledOn;
+        //UserPanel.menuLEDon();
     }
 
 
-    public void getCustomerInput(int cash, String selection){
-        price = dm.checkSelectiedItemPrice(selection);
+     static void getCustomerInput(int cash, String sel){
+        selection = sel;
+        price = DataManager.checkSelectiedItemPrice(selection);
         checkForChange(cash, price);
     }
 
-    public void checkForChange(int cash, int price){
+     static void checkForChange(int cash, int price){
         change = cash - price;
 
-//        if(cash > price)
-//            noChange= mm.checkChangeAvailable();
+        if (cash > price)
+            noChange= MoneyManager.checkChangeAvailable(change);
+
+        if (noChange)
+        {
+            MoneyManager.makeReturnCash(cash);
+            //UserPanel.displayPrompt("No Change");
+        }
+        else {
+            noCup = !CupManager.checkCupExists();
+        }
+        Run();
     }
+
+
+
 }
 

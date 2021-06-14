@@ -7,9 +7,6 @@ public class AbsDataManager {
     public int needed_yulmu;
     public int needed_cocoa;
 
-
-
-
     AbsDataManager(int price, int sugar, int beans, int creamer, int yulmu, int cocoa) {
         this.price = price;
         this.needed_sugar = sugar;
@@ -18,6 +15,5 @@ public class AbsDataManager {
         this.needed_yulmu = yulmu;
         this.needed_cocoa = cocoa;
     }
-
 
 }
