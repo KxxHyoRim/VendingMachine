@@ -8,9 +8,8 @@ public class Controller {
     int menuNum;
     int change;
     int price;
-    boolean noChange;
+    boolean Anavailable;
     DataManager dm;
-    MoneyManager mm;
     HashMap<String, Boolean> bool_ledOn = new HashMap<>();
     HashMap<String, AbsDataManager> list_menu = new HashMap<>();
     Set<String> menu_keys;
@@ -18,6 +17,7 @@ public class Controller {
     Controller() {
         dm = new DataManager();
         list_menu =dm.list_menu;
+        Anavailable = false;
 
         //LED state 초기화
         menu_keys = list_menu.keySet();
@@ -27,7 +27,6 @@ public class Controller {
             String key = it.next();
             bool_ledOn.put(key,false);
         }
-
     }
 
     public HashMap<String, Boolean> checkLEDon(int cash){
@@ -44,8 +43,8 @@ public class Controller {
         return bool_ledOn;
     }
 
-
     public void getCustomerInput(int cash, String selection){
+        this.cash = cash;
         price = dm.checkSelectiedItemPrice(selection);
         checkForChange(cash, price);
     }
@@ -54,7 +53,10 @@ public class Controller {
         change = cash - price;
 
         if(cash > price)
-            noChange= mm.checkChangeAvailable();
+            Anavailable = MoneyManager.checkChangeAvailable(change);
+
+        if(Anavailable)
+            MoneyManager.makeReturnCash(cash);
     }
 }
 
