@@ -22,6 +22,12 @@ public class CupManager {
     }
 
     static void increaseCupNumber(int addedNumber){
-        curCupNumber++;
+        curCupNumber+=addedNumber;
+    }
+
+    static void dropCup(){
+        decreaseCupNumber();
+        //UserPanel.receiveCup();
+        return;
     }
 }

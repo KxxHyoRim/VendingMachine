@@ -8,10 +8,17 @@ public class MoneyManager {
     static int coin100 = 10;
     static int coin500 = 10;
     static int coin1000 = 10;
-    static int input_50won=0;
-    static int input_100won=0;
-    static int input_500won=0;
-    static int input_1000won=0;
+
+//    static int input_50won=0;
+//    static int input_100won=0;
+//    static int input_500won=0;
+//    static int input_1000won=0;
+
+    static int change_50won = 10;
+    static int change_100won = 10;
+    static int change_500won = 10;
+    static int change_1000won = 10;
+
     static HashMap<String, Boolean> bool_ledOn = new HashMap<>();
 
     MoneyManager(){
@@ -19,26 +26,19 @@ public class MoneyManager {
 
     static void calcInputCash(int cash) {
 
-        if(!(cash==50 || cash==100 || cash==500 || cash==1000))
-            //UserPanel.receive(cash);
-
         //투입된 돈 갯수 count
-        switch (cash){
+        switch (cash) {
             case 50:
                 coin50++;
-                input_50won++;
                 break;
             case 100:
                 coin100++;
-                input_100won++;
                 break;
             case 500:
                 coin500++;
-                input_500won++;
                 break;
             case 1000:
                 coin1000++;
-                input_1000won++;
                 break;
         }
         InputTotalCash += cash;
@@ -46,28 +46,37 @@ public class MoneyManager {
         Controller.checkLEDon(InputTotalCash);
         bool_ledOn = Controller.bool_ledOn;
 
-//        출력해보기
-//        Set<String> keys = bool_ledOn.keySet();
-//        Iterator<String> it = keys.iterator();
-//        System.out.println("\n------------켜져야하는 led list------------");
-//
-//        while(it.hasNext()) {
-//            String key = it.next();
-//            if (bool_ledOn.get(key))
-//                System.out.println("key :: " + key + "--> price :: " + DataManager.list_menu.get(key).price);
-//        }
+        return;
     }
 
-    static boolean checkChangeAvailable(int change) {
-        int tmp_1000 = change/1000;
-        change = change%1000;
-        int tmp_500 = change/500;
-        change = change%500;
-        int tmp_100 = change/100;
-        change = change%100;
-        int tmp_50 = change/50;
 
-        if(tmp_50<=coin50 && tmp_100<=coin100 && tmp_500<=coin500 && tmp_1000<=coin1000)
+    static boolean checkChangeAvailable(int change) {
+
+        change_1000won = change/1000;
+        change = change%1000;
+        change_500won  = change/500;
+        change = change%500;
+        change_100won = change/100;
+        change = change%100;
+        change_50won = change/50;
+
+        if (change_1000won > coin1000) {
+            change_1000won -= coin1000;
+            change_500won += change_1000won * 1000 / 500;
+            change_1000won = coin1000;
+        }
+        if (change_500won > coin500) {
+            change_500won -= coin500;
+            change_100won += change_500won * 500 / 100;
+            change_500won = coin500;
+        }
+        if (change_100won > coin100) {
+            change_100won -= coin100;
+            change_50won += change_100won * 100 / 50;
+            change_100won = coin100;
+        }
+
+        if(change_50won<=coin50 && change_100won<=coin100 && change_500won<=coin500 && change_1000won<=coin1000)
             return false;
         else
             return true;
@@ -77,16 +86,12 @@ public class MoneyManager {
 
         //초기화
         InputTotalCash = 0;
-        coin1000 -= input_1000won;
-        coin500 -= input_500won;
-        coin100 -= input_100won;
-        coin50 -= input_50won;
 
-        //UserPanel.receive();
+        coin1000 -= change_1000won;
+        coin500 -= change_500won;
+        coin100 -= change_100won;
+        coin50 -= change_50won;
 
-        input_1000won = 0;
-        input_500won = 0;
-        input_100won = 0;
-        input_50won = 0;
+        UserPanel.receive();
     }
 }

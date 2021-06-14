@@ -21,15 +21,22 @@ public class IngredientManager {
         if(item.needed_cocoa <= curCocoaAmount && item.needed_yulmu <= curYulmuAmount && item.needed_creamer <= curCreamerAmount &&
                 item.needed_coffeeBeans <= curCoffeeBeansAmount && item.needed_sugar <= curSugarAmount)
         {
-            decreaseIngredient("sugar", item.needed_sugar);
-            decreaseIngredient("creamer", item.needed_creamer);
-            decreaseIngredient("yulmu", item.needed_yulmu);
-            decreaseIngredient("cocoa", item.needed_cocoa);
-            decreaseIngredient("coffeeBeans", item.needed_coffeeBeans);
             return true;
         }
         else
             return false;
+    }
+
+    static void dropIngredient(String menu){
+        AbsDataManager item = DataManager.list_menu.get(menu);
+
+        decreaseIngredient("sugar", item.needed_sugar);
+        decreaseIngredient("creamer", item.needed_creamer);
+        decreaseIngredient("yulmu", item.needed_yulmu);
+        decreaseIngredient("cocoa", item.needed_cocoa);
+        decreaseIngredient("coffeeBeans", item.needed_coffeeBeans);
+
+        Menufacture.getIngredient();
     }
 
     static void increaseIngredient(String ingredient, int additionalAmount){
