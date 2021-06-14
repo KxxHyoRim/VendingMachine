@@ -9,15 +9,16 @@ public class UserPanel extends JFrame {
 
     final int ON_SALE = 1;
     final int MAKING = 2;
-    int menu_num;
+    static int menu_num;
 
     private MyPanel panel = new MyPanel();
-    private DataManager dm = new DataManager();
-    HashMap<String, AbsDataManager> list_menu = dm.list_menu;
-    HashMap<String, String> EngToKor = dm.EngToKor;
+    static private DataManager dm = new DataManager();
+    static HashMap<String, AbsDataManager> list_menu = dm.list_menu;
+    static HashMap<String, String> EngToKor = dm.EngToKor;
 
-    String[] menuName;
-    JButton[] pushLED;
+
+    static String[] menuName;
+    static JButton[] pushLED;
     int[] price;
 
     int[] locX = {152, 215, 280,152,215, 280,152,215, 280,};
@@ -25,7 +26,7 @@ public class UserPanel extends JFrame {
 
     int cash = 0;
 
-    JLabel status;
+    JLabel prompt;
     JLabel money;
     JButton btnWrong;
     JButton btn1000;
@@ -82,16 +83,16 @@ public class UserPanel extends JFrame {
         }
 
         /** 상태 */
-        status = new JLabel();
-        status.setFont(new Font("고딕체", Font.BOLD, 14));
-        status.setHorizontalAlignment(SwingConstants.CENTER);
-        status.setText("판 매 중");
-        status.setBackground(Color.BLUE);
-        status.setOpaque(false);
-        status.setForeground(Color.RED);
-        status.setSize(100, 15);
-        status.setLocation(463, 420);
-        panel.add(status);
+        prompt = new JLabel();
+        prompt.setFont(new Font("고딕체", Font.BOLD, 14));
+        prompt.setHorizontalAlignment(SwingConstants.CENTER);
+        prompt.setText("판 매 중");
+        prompt.setBackground(Color.BLUE);
+        prompt.setOpaque(false);
+        prompt.setForeground(Color.RED);
+        prompt.setSize(100, 15);
+        prompt.setLocation(463, 420);
+        panel.add(prompt);
 
 
         /** 투입 금액 */
@@ -183,7 +184,8 @@ public class UserPanel extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if ((JButton)e.getSource() == btn1000){
+            if ((JButton)e.getSource() == btnWrong){
+                tempCash = -1;
                 System.out.println("Log :: Wrong Money ");
             }
 
@@ -217,6 +219,23 @@ public class UserPanel extends JFrame {
                 money.setText(String.valueOf(cash) + "원");
             }
         }
+    }
+
+    static void menuLEDon(){
+        HashMap<String, Boolean>  bool_ledOn =  Controller.bool_ledOn;
+        for (int i = 0 ; i< menu_num; i++){
+            Boolean check = bool_ledOn.get(menuName[i]);
+            if (check == true)
+                pushLED[i].setEnabled(true);
+        }
+    }
+
+    static void receive(){
+
+    }
+
+    static void displayPrompt(String s){
+
     }
 
     class setMenu extends JFrame{

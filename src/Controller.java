@@ -70,7 +70,7 @@ public class Controller {
                bool_ledOn.replace(key,true);
            }
         }
-        //UserPanel.menuLEDon();
+        UserPanel.menuLEDon();
     }
 
 
