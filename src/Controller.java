@@ -8,18 +8,19 @@ public class Controller {
     int menuNum;
     int change;
     int price;
+    boolean noChange;
     DataManager dm;
     MoneyManager mm;
     HashMap<String, Boolean> bool_ledOn = new HashMap<>();
-    //HashMap<String, AbsDataManager> list_menu= new HashMap<>();
+    HashMap<String, AbsDataManager> list_menu = new HashMap<>();
     Set<String> menu_keys;
 
     Controller() {
         dm = new DataManager();
-        //copyList_menu();
+        list_menu =dm.list_menu;
 
         //LED state 초기화
-        menu_keys = dm.list_menu.keySet();
+        menu_keys = list_menu.keySet();
         Iterator<String> it = menu_keys.iterator();
 
         while(it.hasNext()){
@@ -29,18 +30,12 @@ public class Controller {
 
     }
 
-//    void copyList_menu() {
-//        //DataManager 클래스 HashMap 가져오기
-//        this.list_menu.putAll(dm.getList_menu());
-//        menuNum = list_menu.size();
-//    }
-
     public HashMap<String, Boolean> checkLEDon(int cash){
         Iterator<String> it = menu_keys.iterator();
 
         while(it.hasNext()){
            String key = it.next();
-           int tmp_price = dm.list_menu.get(key).price;
+           int tmp_price = list_menu.get(key).price;
 
            if(cash >= tmp_price) {
                bool_ledOn.replace(key,true);
@@ -49,9 +44,6 @@ public class Controller {
         return bool_ledOn;
     }
 
-//    public HashMap<String, AbsDataManager> getList_menu() {
-//        return list_menu;
-//    }
 
     public void getCustomerInput(int cash, String selection){
         price = dm.checkSelectiedItemPrice(selection);
@@ -60,6 +52,9 @@ public class Controller {
 
     public void checkForChange(int cash, int price){
         change = cash - price;
+
+        if(cash > price)
+            noChange= mm.checkChangeAvailable();
     }
 }
 

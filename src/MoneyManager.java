@@ -4,6 +4,10 @@ import java.util.Set;
 
 public class MoneyManager {
     int cash;
+    int coin50 = 200;
+    int coin100 = 200;
+    int coin500 = 200;
+    int coin1000 = 200;
     Controller controller;
     HashMap<String, Boolean> bool_ledOn = new HashMap<>();
 
@@ -29,4 +33,8 @@ public class MoneyManager {
                 System.out.println("key :: " + key + "--> price :: " + controller.dm.list_menu.get(key).price);
         }
     }
+
+//    boolean checkChangeAvailable() {
+//
+//    }
 }
