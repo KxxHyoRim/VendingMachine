@@ -8,8 +8,11 @@ public class CupManager {
     }
 
     static boolean checkCupExists() {
-        if (curCupNumber>0)
+        if ( curCupNumber > 0 )
+        {
+            decreaseCupNumber();
             return true;
+        }
         else
             return false;
     }
@@ -18,7 +21,7 @@ public class CupManager {
         curCupNumber--;
     }
 
-    static void increaseCupNumber(){
+    static void increaseCupNumber(int addedNumber){
         curCupNumber++;
     }
 }

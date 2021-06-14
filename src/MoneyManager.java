@@ -12,14 +12,12 @@ public class MoneyManager {
     static int input_100won=0;
     static int input_500won=0;
     static int input_1000won=0;
-    Controller controller = new Controller();
-    HashMap<String, Boolean> bool_ledOn = new HashMap<>();
+    static HashMap<String, Boolean> bool_ledOn = new HashMap<>();
 
     MoneyManager(){
-
     }
 
-    void calcInputCash (int cash) {
+    static void calcInputCash(int cash) {
 
         if(!(cash==50 || cash==100 || cash==500 || cash==1000))
             //UserPanel.receive(cash);
@@ -45,19 +43,19 @@ public class MoneyManager {
         }
         InputTotalCash += cash;
 
-        //원래는 userPanel에서 해야되는데 일단 여기서 test
-        bool_ledOn = controller.checkLEDon(cash);
+        Controller.checkLEDon(InputTotalCash);
+        bool_ledOn = Controller.bool_ledOn;
 
-        //출력해보기
-        Set<String> keys = bool_ledOn.keySet();
-        Iterator<String> it = keys.iterator();
-        System.out.println("\n------------켜져야하는 led list------------");
-
-        while(it.hasNext()) {
-            String key = it.next();
-            if (bool_ledOn.get(key))
-                System.out.println("key :: " + key + "--> price :: " + controller.dm.list_menu.get(key).price);
-        }
+//        출력해보기
+//        Set<String> keys = bool_ledOn.keySet();
+//        Iterator<String> it = keys.iterator();
+//        System.out.println("\n------------켜져야하는 led list------------");
+//
+//        while(it.hasNext()) {
+//            String key = it.next();
+//            if (bool_ledOn.get(key))
+//                System.out.println("key :: " + key + "--> price :: " + DataManager.list_menu.get(key).price);
+//        }
     }
 
     static boolean checkChangeAvailable(int change) {
@@ -83,6 +81,4 @@ public class MoneyManager {
         coin50 -= input_50won;
         //UserPanel.receive(cash);
     }
-
-
 }

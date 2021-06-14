@@ -2,10 +2,9 @@ import java.util.*;
 
 class DataManager {
 
-    int minPrice;
-    HashMap<String, AbsDataManager> list_menu;
-    HashMap<String, String > EngToKor;
-
+    final static int needed_water = 50;
+    static HashMap<String, AbsDataManager> list_menu;
+    static HashMap<String, String > EngToKor;
 
     DataManager() {
         list_menu = new HashMap<>();
@@ -36,19 +35,29 @@ class DataManager {
         EngToKor.put("Milk", "우유");
     }
 
-    public HashMap<String, AbsDataManager> getList_menu() {
-        return list_menu;
-    }
-
     //이건 그냥 바뀌는거 확인하려구용
     public void changeMenu(String key, AbsDataManager value){
         list_menu.replace(key,value);
     }
 
-    int checkSelectiedItemPrice(String menu){
+    static int checkSelectiedItemPrice(String menu){
         return list_menu.get(menu).price;
     }
 
+    static int checkNeededWaterAmount(){
+        return needed_water;
+    }
 
+    static void checkNeededIngredient(String menu){
+        AbsDataManager item = list_menu.get(menu);
+
+        Controller.needed_sugar = item.needed_sugar;
+        Controller.needed_creamer = item.needed_creamer;
+        Controller.needed_cocoa = item.needed_cocoa;
+        Controller.needed_yulmu = item.needed_yulmu;
+        Controller.needed_coffeeBeans = item.needed_coffeeBeans;
+
+        return;
+    }
 
 }
