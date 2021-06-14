@@ -26,7 +26,7 @@ public class UserPanel extends JFrame {
 
     int cash = 0;
 
-    JLabel prompt;
+    JLabel status;
     JLabel money;
     JButton btnWrong;
     JButton btn1000;
@@ -83,16 +83,16 @@ public class UserPanel extends JFrame {
         }
 
         /** 상태 */
-        prompt = new JLabel();
-        prompt.setFont(new Font("고딕체", Font.BOLD, 14));
-        prompt.setHorizontalAlignment(SwingConstants.CENTER);
-        prompt.setText("판 매 중");
-        prompt.setBackground(Color.BLUE);
-        prompt.setOpaque(false);
-        prompt.setForeground(Color.RED);
-        prompt.setSize(100, 15);
-        prompt.setLocation(463, 420);
-        panel.add(prompt);
+        status = new JLabel();
+        status.setFont(new Font("고딕체", Font.BOLD, 14));
+        status.setHorizontalAlignment(SwingConstants.CENTER);
+        status.setText("판 매 중");
+        status.setBackground(Color.BLUE);
+        status.setOpaque(false);
+        status.setForeground(Color.RED);
+        status.setSize(100, 15);
+        status.setLocation(463, 420);
+        panel.add(status);
 
 
         /** 투입 금액 */
