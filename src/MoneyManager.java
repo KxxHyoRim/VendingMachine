@@ -2,12 +2,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class moneyManager {
+public class MoneyManager {
     int cash;
     Controller controller;
     HashMap<String, Boolean> bool_ledOn = new HashMap<>();
 
-    moneyManager(){
+    MoneyManager(){
         controller = new Controller();
         cash =600; //일단 test
 

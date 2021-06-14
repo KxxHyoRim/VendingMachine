@@ -9,7 +9,7 @@ public class Controller {
     int change;
     int price;
     DataManager dm;
-    moneyManager mm;
+    MoneyManager mm;
     HashMap<String, Boolean> bool_ledOn = new HashMap<>();
     //HashMap<String, AbsDataManager> list_menu= new HashMap<>();
     Set<String> menu_keys;
