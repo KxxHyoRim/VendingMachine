@@ -6,8 +6,6 @@ public class Main {
         new MoneyManager();
         new Controller();
 
-        //UserPanel.accept();
-
 
     }
 }

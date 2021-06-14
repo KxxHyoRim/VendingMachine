@@ -179,6 +179,7 @@ public class UserPanel extends JFrame {
     class InputMoneyListener implements ActionListener{
 
         /** Money Manager 변수 ++ 변경해야됨 !!! */
+        int tempCash=0;
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -187,24 +188,30 @@ public class UserPanel extends JFrame {
             }
 
             if ((JButton)e.getSource() == btn1000){
+                tempCash = 1000;
                 cash += 1000;
                 System.out.println("Log :: 1000 won ");
             }
 
             if ((JButton)e.getSource() == btn500){
+                tempCash = 500;
                 cash += 500;
                 System.out.println("Log :: 500 won ");
             }
 
             if ((JButton)e.getSource() == btn100){
+                tempCash = 100;
                 cash += 100;
                 System.out.println("Log :: 100 won ");
             }
 
             if ((JButton)e.getSource() == btn50){
+                tempCash = 50;
                 cash += 50;
                 System.out.println("Log :: 50 won ");
             }
+
+            MoneyManager.calcInputCash(tempCash);
 
             if (cash != 0){
                 money.setText(String.valueOf(cash) + "원");
