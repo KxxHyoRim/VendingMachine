@@ -176,6 +176,7 @@ public class UserPanel extends JFrame {
         public void actionPerformed(ActionEvent e) {
             for (int i = 0 ; i < menu_num; i++){
                 if ((JButton)e.getSource() == pushLED[i]) {
+                    Controller.getCustomerInput(cash,menuName[i]);
                     System.out.println(menuName[i] + " : " + price[i]);
                 }
             }
