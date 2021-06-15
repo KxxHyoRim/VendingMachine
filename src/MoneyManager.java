@@ -5,8 +5,8 @@ import java.util.Set;
 public class MoneyManager {
     static int InputTotalCash = 0;
     /** 수정함 나중에 10으로 바꾸기 */
-    static int coin50 = 6;
-    static int coin100 = 0;
+    static int coin50 = 0;
+    static int coin100 = 3;
     static int coin500 = 1;
     static int coin1000 = 10;
 

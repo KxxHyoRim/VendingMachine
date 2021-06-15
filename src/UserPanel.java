@@ -280,8 +280,7 @@ public class UserPanel extends JFrame {
         }
         if (e == 2) {
             exception = 2;
-
-//            displayPrompt("No Ingredient");
+            displayPrompt("No Ingredient");
         }
         money.setText("- - - - - - -");
         Controller.checkLEDon(0);
@@ -336,7 +335,7 @@ public class UserPanel extends JFrame {
                     ActionListener listener = new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            if (sum !=0 && exception == -1){
+                            if (exception == 2){
                                 displayPrompt("판매중");
                             }
 
@@ -445,14 +444,11 @@ public class UserPanel extends JFrame {
                 int sum = receive_50won + receive_100won + receive_500won + receive_1000won;
 
 
-                if (sum != 0)
+                if (sum != 0 && exception ==-1)
                     displayPrompt("반환중");
                 ActionListener listener = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (sum !=0 && exception == -1){
-                            displayPrompt("판매중");
-                        }
 
                         if (Controller.noCup){
                             displayPrompt("No Cup");
@@ -461,6 +457,10 @@ public class UserPanel extends JFrame {
                         if (Controller.noWater){
                             displayPrompt("No Water");
                         }
+                        else{
+                            displayPrompt("판매중");
+                        }
+
                     }
                 };
                 Timer timer = new Timer(sum*1000, listener);
