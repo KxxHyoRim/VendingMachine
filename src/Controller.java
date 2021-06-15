@@ -41,7 +41,7 @@ public class Controller {
     static void Run(){
         if(noCup)
         {
-            MoneyManager.makeReturnCash();
+            MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
             UserPanel.displayPrompt("No Cup");
             return;
         }
@@ -49,7 +49,7 @@ public class Controller {
 
         if(!WaterManager.checkNeededWaterAmount(needed_waterAmount))
         {
-            MoneyManager.makeReturnCash();
+            MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
             UserPanel.displayPrompt("No Water");
             return;
         }
@@ -57,7 +57,7 @@ public class Controller {
 
 
         if(!IngredientManager.checkIngredientAvailable(selection)){
-            MoneyManager.makeReturnCash();
+            MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
             UserPanel.displayPrompt("No Ingredient");
             return;
         }
@@ -98,7 +98,7 @@ public class Controller {
 
         if (noChange)
         {
-            MoneyManager.makeReturnCash();
+            MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
             UserPanel.displayPrompt("No Change");
         }
         else {
@@ -117,7 +117,7 @@ public class Controller {
         if(cash >= DataManager.minPrice)
             checkLEDon(cash);
         else
-            MoneyManager.makeReturnCash();
+            MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
 
     }
 

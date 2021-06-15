@@ -238,16 +238,14 @@ public class UserPanel extends JFrame {
 
     static void receive(Boolean wrong){
 
-        new FlickeringLabel(3, 650, 270);
+        new FlickeringLabel(1, 650, 270);
 
         /**정상코드*/
         displayPrompt("반환중");
-
         ActionListener listener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 displayPrompt("판매중");
-//                check.setVisible(false);
             }
         };
         Timer timer = new Timer(500, listener);
@@ -302,33 +300,30 @@ public class UserPanel extends JFrame {
     }
 
 
-
-
-
-
     static void receive(){
 
-        receive_50won = MoneyManager.input_50won;
-        receive_100won = MoneyManager.input_100won;
-        receive_500won = MoneyManager.input_500won;
-        receive_1000won = MoneyManager.input_1000won;
+        receive_50won = MoneyManager.change_50won;
+        receive_100won = MoneyManager.change_100won;
+        receive_500won = MoneyManager.change_500won;
+        receive_1000won = MoneyManager.change_1000won;
 
-        for(int i = 0 ; i < receive_50won; i++){
-            displayPrompt("반환중");
-            btn50.setBackground(Color.ORANGE);
-            btnWrong.setOpaque(true);
-            ActionListener listener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    btnWrong.setOpaque(false);
-                    displayPrompt("판매중");
-                }
-            };
-            Timer timer = new Timer(500, listener);
-            timer.setRepeats(false);
-            timer.start();
-        }
+        new FlickeringLabel(receive_50won, 650, 590);
+        new FlickeringLabel(receive_100won, 650, 510);
+        new FlickeringLabel(receive_500won, 650, 430);
+        new FlickeringLabel(receive_1000won, 650, 350);
 
+
+        int sum = receive_50won + receive_100won + receive_500won + receive_1000won;
+        displayPrompt("반환중");
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayPrompt("판매중");
+            }
+        };
+        Timer timer = new Timer(sum*1000, listener);
+        timer.setRepeats(false);
+        timer.start();
 
     }
 

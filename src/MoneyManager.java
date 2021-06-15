@@ -4,9 +4,10 @@ import java.util.Set;
 
 public class MoneyManager {
     static int InputTotalCash = 0;
-    static int coin50 = 10;
-    static int coin100 = 10;
-    static int coin500 = 10;
+    /** 수정함 나중에 10으로 바꾸기 */
+    static int coin50 = 0;
+    static int coin100 = 0;
+    static int coin500 = 1;
     static int coin1000 = 10;
 
 //    static int input_50won=0;
@@ -14,10 +15,10 @@ public class MoneyManager {
 //    static int input_500won=0;
 //    static int input_1000won=0;
 
-    static int change_50won = 10;
-    static int change_100won = 10;
-    static int change_500won = 10;
-    static int change_1000won = 10;
+    static int change_50won = 0;
+    static int change_100won = 0;
+    static int change_500won = 0;
+    static int change_1000won = 0;
     static int input_wrong=0;
 
 
