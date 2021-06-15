@@ -2,6 +2,7 @@ import java.util.*;
 
 class DataManager {
 
+    static int minPrice;
     final static int needed_water = 50;
     static HashMap<String, AbsDataManager> list_menu;
     static HashMap<String, String > EngToKor;
@@ -33,6 +34,19 @@ class DataManager {
         EngToKor.put("Cocoa", "코코아");
         EngToKor.put("Cappuccino", "카푸치노");
         EngToKor.put("Milk", "우유");
+
+        Set<String> menu_keys = list_menu.keySet();
+        Iterator<String> it = menu_keys.iterator();
+
+        minPrice = Integer.MAX_VALUE;
+        while(it.hasNext()){
+            String key = it.next();
+            int tmp_price = list_menu.get(key).price;
+
+            if(minPrice > tmp_price) {
+                minPrice = tmp_price;
+            }
+        }
     }
 
     //이건 그냥 바뀌는거 확인하려구용
@@ -56,7 +70,6 @@ class DataManager {
         Controller.needed_cocoa = item.needed_cocoa;
         Controller.needed_yulmu = item.needed_yulmu;
         Controller.needed_coffeeBeans = item.needed_coffeeBeans;
-
         return;
     }
 

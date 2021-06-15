@@ -5,7 +5,5 @@ public class Main {
         new UserPanel();
         new MoneyManager();
         new Controller();
-
-
     }
 }
