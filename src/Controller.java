@@ -1,4 +1,7 @@
+import javax.swing.*;
 import javax.xml.crypto.Data;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -17,6 +20,7 @@ public class Controller {
     static int needed_cocoa;
 
     static boolean noChange;
+    static boolean noWater;
     static boolean noCup;
     static boolean noIngredient;
 
@@ -39,34 +43,41 @@ public class Controller {
     }
 
     static void Run(){
-        if(noCup)
-        {
+
+        if(noCup) {
+            MoneyManager.calcChange(MoneyManager.InputTotalCash);
             MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
-            UserPanel.displayPrompt("No Cup");
+            UserPanel.exception(1);
             return;
         }
+
         needed_waterAmount = DataManager.checkNeededWaterAmount();
-
-        if(!WaterManager.checkNeededWaterAmount(needed_waterAmount))
-        {
+        noWater = !WaterManager.checkNeededWaterAmount(needed_waterAmount);
+        if(noWater) {
+            MoneyManager.calcChange(MoneyManager.InputTotalCash);
             MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
-            UserPanel.displayPrompt("No Water");
+            UserPanel.exception(0);
             return;
         }
+
+
         DataManager.checkNeededIngredient(selection);
-
-
-        if(!IngredientManager.checkIngredientAvailable(selection)){
+        noIngredient = !IngredientManager.checkIngredientAvailable(selection);
+        if(noIngredient){
+            MoneyManager.calcChange(MoneyManager.InputTotalCash);
             MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
-            UserPanel.displayPrompt("No Ingredient");
+            UserPanel.exception(2);
             return;
         }
+
+        /** No Exception */
         CupManager.dropCup();
         WaterManager.dropWater(needed_waterAmount);
         IngredientManager.dropIngredient(selection);
 
-
     }
+
+
 
     static void checkLEDon(int cash){
         Iterator<String> it = menu_keys.iterator();
@@ -77,36 +88,51 @@ public class Controller {
 
            if(cash >= tmp_price) {
                bool_ledOn.replace(key,true);
+           } else{
+               bool_ledOn.replace(key,false);
+
            }
         }
         UserPanel.menuLEDon();
-        return;
     }
 
      static void getCustomerInput(int cash, String sel){
         selection = sel;
         price = DataManager.checkSelectiedItemPrice(selection);
         checkForChange(cash, price);
-        return;
-    }
+     }
+
 
      static void checkForChange(int cash, int price){
         change = cash - price;
 
-        if (cash > price)
+        if (cash >= price)
             noChange= MoneyManager.checkChangeAvailable(change);
 
-        if (noChange)
-        {
+        if (noChange) {
             MoneyManager.calcChange(cash);
             MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
+            checkLEDon(cash);
+            UserPanel.menuLEDon();
             UserPanel.displayPrompt("No Change");
+            UserPanel.money.setText("- - - - - - -");
+            return;
         }
         else {
+            UserPanel.money.setText(change + "원");
             noCup = !CupManager.checkCupExists();
         }
         Run();
         return;
+    }
+
+    static Boolean checkException(){
+        if (noCup || noWater){
+            MoneyManager.calcChange(MoneyManager.InputTotalCash );
+            MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
+            return true;
+        }
+        return false;
     }
 
     static void getCompleteMessage(){
@@ -117,14 +143,26 @@ public class Controller {
     static void checkOtherMenuAvailable(int cash){
         if(cash >= DataManager.minPrice)
             checkLEDon(cash);
-        else
+        else{
+
+//            if (noCup){
+//                UserPanel.displayPrompt("No Cup");
+//            }
+
             MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
+            checkLEDon(cash);
+            UserPanel.menuLEDon();
+            UserPanel.money.setText("- - - - - - -");
+//            UserPanel.removeCup();
+
+        }
 
     }
 
     static void update(){
         MoneyManager.InputTotalCash -= price;
         checkOtherMenuAvailable(MoneyManager.InputTotalCash);
+
     }
 
 }

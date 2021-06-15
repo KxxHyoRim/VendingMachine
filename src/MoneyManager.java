@@ -32,7 +32,7 @@ public class MoneyManager {
 
         if(!(cash==50 || cash==100 || cash==500 || cash==1000)){
             input_wrong++;
-            UserPanel.receive(true);
+            UserPanel.receive(-1);
             input_wrong = 0;
         }
 
@@ -57,8 +57,13 @@ public class MoneyManager {
         }
         InputTotalCash += cash;
 
-        Controller.checkLEDon(InputTotalCash);
-        bool_ledOn = Controller.bool_ledOn;
+
+        Boolean isException = Controller.checkException();
+        if (!isException){
+            Controller.checkLEDon(InputTotalCash);
+            bool_ledOn = Controller.bool_ledOn;
+        }
+
     }
 
     static void calcChange(int cash){
@@ -140,5 +145,14 @@ public class MoneyManager {
         coin50 -= change_50won;
 
         UserPanel.receive();
+        change_1000won=0;
+        change_500won=0;
+        change_100won=0;
+        change_50won=0;
+
+        input_1000won=0;
+        input_500won=0;
+        input_100won=0;
+        input_50won=0;
     }
 }

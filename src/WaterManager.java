@@ -1,6 +1,6 @@
 public class WaterManager {
 
-    static int curWaterAmount = 200;
+    static int curWaterAmount = 50;
     static int maxWaterAmount = 400;
 
     WaterManager(){

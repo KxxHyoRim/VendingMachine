@@ -1,6 +1,6 @@
 public class CupManager {
 
-    static int curCupNumber = 1;
+    static int curCupNumber = 2;
     static int maxCupNumber = 5;
 
     CupManager(){

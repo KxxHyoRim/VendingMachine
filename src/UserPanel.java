@@ -8,8 +8,7 @@ import java.util.Set;
 
 public class UserPanel extends JFrame {
 
-    final int ON_SALE = 1;
-    final int MAKING = 2;
+    static int exception = -1;
     static int menu_num;
 
     static int receive_50won;
@@ -41,6 +40,8 @@ public class UserPanel extends JFrame {
     static JButton btn100;
     static JButton btn50;
     static JButton reset;
+    static JLabel makingCup;
+    static JLabel smoke;
 
 
 
@@ -201,7 +202,7 @@ public class UserPanel extends JFrame {
         public void actionPerformed(ActionEvent e) {
             for (int i = 0 ; i < menu_num; i++){
                 if ((JButton)e.getSource() == pushLED[i]) {
-                    Controller.getCustomerInput(cash,menuName[i]);
+                    Controller.getCustomerInput(MoneyManager.InputTotalCash,menuName[i]);
                     System.out.println(menuName[i] + " : " + price[i]);
                 }
             }
@@ -216,6 +217,10 @@ public class UserPanel extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            if (exception == 1|| exception == 0)
+                receive(exception);
+
             if ((JButton)e.getSource() == btnWrong){
                 tempCash = -1;
                 System.out.println("Log :: Wrong Money ");
@@ -248,7 +253,7 @@ public class UserPanel extends JFrame {
             MoneyManager.calcInputCash(tempCash);
 
             if (cash != 0){
-                money.setText(String.valueOf(cash) + "원");
+                money.setText(String.valueOf(MoneyManager.InputTotalCash) + "원");
             }
         }
     }
@@ -259,24 +264,102 @@ public class UserPanel extends JFrame {
             Boolean check = bool_ledOn.get(menuName[i]);
             if (check == true)
                 pushLED[i].setEnabled(true);
+            else
+                pushLED[i].setEnabled(false);
         }
     }
 
-    static void receive(Boolean wrong){
+    static void exception(int e){
+        if (e == 0) {
+            exception = 0;
+            displayPrompt("No Water");
+        }
+        if (e == 1) {
+            exception = 1;
+            displayPrompt("No Cup");
+        }
+        if (e == 2) {
+            exception = 2;
 
-        new FlickeringLabel(1, 650, 270);
+//            displayPrompt("No Ingredient");
+        }
+        money.setText("- - - - - - -");
+        Controller.checkLEDon(0);
 
-        /**정상코드*/
-        displayPrompt("반환중");
-        ActionListener listener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                displayPrompt("판매중");
-            }
-        };
-        Timer timer = new Timer(500, listener);
-        timer.setRepeats(false);
-        timer.start();
+
+    }
+
+    static void receive(int wrong){
+
+        if (wrong == -1){
+            new FlickeringLabel(1, 650, 270);
+
+            /**정상코드*/
+            displayPrompt("반환중");
+            ActionListener listener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    displayPrompt("판매중");
+                }
+            };
+            Timer timer = new Timer(500, listener);
+            timer.setRepeats(false);
+            timer.start();
+        }
+
+        if (wrong == 0 || wrong == 1) {
+            receive_50won = MoneyManager.input_50won;
+            receive_100won = MoneyManager.input_100won;
+            receive_500won = MoneyManager.input_500won;
+            receive_1000won = MoneyManager.input_1000won;
+
+            System.out.println("\nIn receive");
+            System.out.println("1000원 지폐: " + receive_1000won);
+            System.out.println("500원 동전: " + receive_500won);
+            System.out.println("100원 동전: " + receive_100won);
+            System.out.println("50원 동전: " + receive_50won);
+
+            ActionListener listener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new FlickeringLabel(receive_50won, 650, 590);
+                    new FlickeringLabel(receive_100won, 650, 510);
+                    new FlickeringLabel(receive_500won, 650, 430);
+                    new FlickeringLabel(receive_1000won, 650, 350);
+
+
+                    int sum = receive_50won + receive_100won + receive_500won + receive_1000won;
+
+
+                    if (sum != 0)
+                        displayPrompt("반환중");
+                    ActionListener listener = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (sum !=0 && exception == -1){
+                                displayPrompt("판매중");
+                            }
+
+                            if (Controller.noCup){
+                                displayPrompt("No Cup");
+                            }
+
+                            if (Controller.noWater){
+                                displayPrompt("No Water");
+                            }
+                        }
+                    };
+                    Timer timer = new Timer(sum*1000, listener);
+                    timer.setRepeats(false);
+                    timer.start();
+
+                }
+            };
+            Timer timer = new Timer(2500, listener);
+            timer.setRepeats(false);
+            timer.start();        }
+
+
     }
 
 
@@ -313,13 +396,27 @@ public class UserPanel extends JFrame {
                 if (n == 0) n = 1;
                 else n = 0;
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     return;
                 }
 
             }
         }
+    }
+
+    static void removeCup() {
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UserPanel.makingCup.setVisible(false);
+                UserPanel.smoke.setVisible(false);
+            }
+        };
+        Timer timer = new Timer(3000, listener);
+        timer.setRepeats(false);
+        timer.start();
+
     }
 
 
@@ -330,36 +427,67 @@ public class UserPanel extends JFrame {
         receive_500won = MoneyManager.change_500won;
         receive_1000won = MoneyManager.change_1000won;
 
+        System.out.println("\nIn receive");
         System.out.println("1000원 지폐: " + receive_1000won);
         System.out.println("500원 동전: " + receive_500won);
         System.out.println("100원 동전: " + receive_100won);
         System.out.println("50원 동전: " + receive_50won);
 
-        new FlickeringLabel(receive_50won, 650, 590);
-        new FlickeringLabel(receive_100won, 650, 510);
-        new FlickeringLabel(receive_500won, 650, 430);
-        new FlickeringLabel(receive_1000won, 650, 350);
-
-
-        int sum = receive_50won + receive_100won + receive_500won + receive_1000won;
-        displayPrompt("반환중");
         ActionListener listener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayPrompt("판매중");
+                new FlickeringLabel(receive_50won, 650, 590);
+                new FlickeringLabel(receive_100won, 650, 510);
+                new FlickeringLabel(receive_500won, 650, 430);
+                new FlickeringLabel(receive_1000won, 650, 350);
+
+
+                int sum = receive_50won + receive_100won + receive_500won + receive_1000won;
+
+
+                if (sum != 0)
+                    displayPrompt("반환중");
+                ActionListener listener = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (sum !=0 && exception == -1){
+                            displayPrompt("판매중");
+                        }
+
+                        if (Controller.noCup){
+                            displayPrompt("No Cup");
+                        }
+
+                        if (Controller.noWater){
+                            displayPrompt("No Water");
+                        }
+                    }
+                };
+                Timer timer = new Timer(sum*1000, listener);
+                timer.setRepeats(false);
+                timer.start();
+
             }
         };
-        Timer timer = new Timer(sum*1000, listener);
+        Timer timer = new Timer(2500, listener);
         timer.setRepeats(false);
         timer.start();
-
     }
+
 
     static void displayPrompt(String s){
         String newS = "";
-        for(int i = 0 ; i < s.length() ; i++){
-            newS += s.charAt(i) + " ";    // 한글자 띄우기
+
+        // 영어면 그대로
+        if (s.charAt(0) >= 'A' || s.charAt(0) <= 'Z')
+            newS = s;
+        // 한국어면 띄어쓰기
+        else {
+            for(int i = 0 ; i < s.length() ; i++){
+                newS += s.charAt(i) + " ";    // 한글자 띄우기
+            }
         }
+
         System.out.println(newS);
         status.setText(newS);
         panel.repaint();
@@ -368,7 +496,8 @@ public class UserPanel extends JFrame {
     static void receiveCup(){
         System.out.println("Receive cup");
 
-        JLabel makingCup = new JLabel(new ImageIcon("cup.png"));
+        makingCup = new JLabel(new ImageIcon("cup.png"));
+        makingCup.setVisible(true);
         makingCup.setBorder(BorderFactory.createEmptyBorder());
         makingCup.setBackground(Color.BLACK);
         makingCup.setOpaque(false);
@@ -376,6 +505,8 @@ public class UserPanel extends JFrame {
         makingCup.setLocation(190, 750);
         panel.add(makingCup);
         panel.repaint();
+
+
 
     }
 
@@ -386,7 +517,8 @@ public class UserPanel extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Receive coffee");
 
-                JLabel smoke = new JLabel(new ImageIcon("smoke.png"));
+                smoke = new JLabel(new ImageIcon("smoke.png"));
+                smoke.setVisible(true);
                 smoke.setBorder(BorderFactory.createEmptyBorder());
                 smoke.setBackground(Color.BLACK);
                 smoke.setOpaque(false);
@@ -394,7 +526,9 @@ public class UserPanel extends JFrame {
                 smoke.setLocation(190, 700);
 
                 panel.add(smoke);
-                panel.repaint();            }
+                panel.repaint();
+                removeCup();
+            }
         };
         Timer timer = new Timer(1500, listener);
         timer.setRepeats(false);
