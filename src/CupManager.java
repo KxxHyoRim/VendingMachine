@@ -31,7 +31,8 @@ public class CupManager {
 
     static void dropCup(){
         decreaseCupNumber();
-        //UserPanel.receiveCup();
+        System.out.println("Drop cup");
+        UserPanel.receiveCup();
         return;
     }
 }

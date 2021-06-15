@@ -9,7 +9,7 @@ public class Menufacture {
             System.out.println(s.charAt(i));
         System.out.println("Finish");
 
-        //UserPanel.receiveCoffee();
+        UserPanel.receiveCoffee();
         return;
     }
 

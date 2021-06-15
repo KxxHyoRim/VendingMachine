@@ -62,7 +62,9 @@ public class Controller {
             return;
         }
         CupManager.dropCup();
+
         WaterManager.dropWater(needed_waterAmount);
+
         IngredientManager.dropIngredient(selection);
 
 

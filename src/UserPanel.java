@@ -52,7 +52,6 @@ public class UserPanel extends JFrame {
         panel.setLayout(null);
         setContentPane(panel);
 
-
         /** 메뉴이름(영어) _ String[] Array */
         Set<String> menuNameSet = list_menu.keySet();       // dataManager의 메뉴 이름 가져오기
         menuName = new String[menuNameSet.size()]; // 메뉴 영어 이름 set을 Array로 변환
@@ -363,6 +362,35 @@ public class UserPanel extends JFrame {
         System.out.println(newS);
         status.setText(newS);
         panel.repaint();
+    }
+
+    static void receiveCup(){
+        System.out.println("Receive cup");
+
+        JLabel makingCup = new JLabel(new ImageIcon("cup.png"));
+        makingCup.setBorder(BorderFactory.createEmptyBorder());
+        makingCup.setBackground(Color.BLACK);
+        makingCup.setOpaque(false);
+        makingCup.setSize(100, 100);
+        makingCup.setLocation(190, 750);
+        panel.add(makingCup);
+        panel.repaint();
+
+
+    }
+
+    static void receiveCoffee(){
+        System.out.println("Receive coffee");
+
+        JLabel smoke = new JLabel(new ImageIcon("smoke.png"));
+        smoke.setBorder(BorderFactory.createEmptyBorder());
+        smoke.setBackground(Color.BLACK);
+        smoke.setOpaque(false);
+        smoke.setSize(100, 100);
+        smoke.setLocation(190, 650);
+        panel.add(smoke);
+        panel.repaint();
+
 
     }
 
