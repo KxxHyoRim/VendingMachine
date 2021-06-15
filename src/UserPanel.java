@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -380,16 +381,27 @@ public class UserPanel extends JFrame {
     }
 
     static void receiveCoffee(){
-        System.out.println("Receive coffee");
 
-        JLabel smoke = new JLabel(new ImageIcon("smoke.png"));
-        smoke.setBorder(BorderFactory.createEmptyBorder());
-        smoke.setBackground(Color.BLACK);
-        smoke.setOpaque(false);
-        smoke.setSize(100, 100);
-        smoke.setLocation(190, 650);
-        panel.add(smoke);
-        panel.repaint();
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Receive coffee");
+
+                JLabel smoke = new JLabel(new ImageIcon("smoke.png"));
+                smoke.setBorder(BorderFactory.createEmptyBorder());
+                smoke.setBackground(Color.BLACK);
+                smoke.setOpaque(false);
+                smoke.setSize(90, 90);
+                smoke.setLocation(190, 700);
+
+                panel.add(smoke);
+                panel.repaint();            }
+        };
+        Timer timer = new Timer(1500, listener);
+        timer.setRepeats(false);
+        timer.start();
+
+
 
 
     }
