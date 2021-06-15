@@ -10,10 +10,10 @@ public class MoneyManager {
     static int coin500 = 1;
     static int coin1000 = 10;
 
-//    static int input_50won=0;
-//    static int input_100won=0;
-//    static int input_500won=0;
-//    static int input_1000won=0;
+    static int input_50won=0;
+    static int input_100won=0;
+    static int input_500won=0;
+    static int input_1000won=0;
 
     static int change_50won = 0;
     static int change_100won = 0;
@@ -30,7 +30,7 @@ public class MoneyManager {
     static void calcInputCash(int cash) {
 
 
-        if(!(cash==50 || cash==100 || cash==500 || cash==1000 || cash == 0)){
+        if(!(cash==50 || cash==100 || cash==500 || cash==1000)){
             input_wrong++;
             UserPanel.receive(true);
             input_wrong = 0;
@@ -40,24 +40,27 @@ public class MoneyManager {
         switch (cash) {
             case 50:
                 coin50++;
+                input_50won++;
                 break;
             case 100:
                 coin100++;
+                input_100won++;
                 break;
             case 500:
                 coin500++;
+                input_500won++;
                 break;
             case 1000:
                 coin1000++;
+                input_1000won++;
                 break;
         }
         InputTotalCash += cash;
 
         Controller.checkLEDon(InputTotalCash);
         bool_ledOn = Controller.bool_ledOn;
-
-
     }
+
     static void calcChange(int cash){
 
         change_1000won = cash/1000;

@@ -184,8 +184,6 @@ public class UserPanel extends JFrame {
 //            }
 //        });
 
-
-
         setAlwaysOnTop(true);
         setLocation(1000, 0);
         setSize(810, 1080);
@@ -390,8 +388,6 @@ public class UserPanel extends JFrame {
         smoke.setLocation(190, 650);
         panel.add(smoke);
         panel.repaint();
-
-
     }
 
     class setMenu extends JFrame{
