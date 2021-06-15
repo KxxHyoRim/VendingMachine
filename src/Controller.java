@@ -94,7 +94,7 @@ public class Controller {
 
      static void getCustomerInput(int cash, String sel){
         selection = sel;
-        price = DataManager.checkSelectiedItemPrice(selection);
+        price = DataManager.checkSelectedItemPrice(selection);
         checkForChange(cash, price);
      }
 

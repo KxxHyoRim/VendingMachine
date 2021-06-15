@@ -1,6 +1,6 @@
 import java.util.*;
 
-class DataManager {
+public class DataManager {
 
     static int minPrice;
     final static int needed_water = 50;
@@ -50,11 +50,11 @@ class DataManager {
     }
 
     //이건 그냥 바뀌는거 확인하려구용
-    public void changeMenu(String key, AbsDataManager value){
+    static void changeMenu(String key, AbsDataManager value){
         list_menu.replace(key,value);
     }
 
-    static int checkSelectiedItemPrice(String menu){
+    static int checkSelectedItemPrice(String menu){
         return list_menu.get(menu).price;
     }
 
