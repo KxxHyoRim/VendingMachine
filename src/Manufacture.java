@@ -1,12 +1,12 @@
-public class Menufacture {
+public class Manufacture {
 
-    Menufacture(){
+    Manufacture(){
     }
 
     static void stir(){
         String s = "Mixing";
         for(int i=0;i<s.length();i++)
-            System.out.println(s.charAt(i));
+            System.out.print(s.charAt(i));
         System.out.println("Finish");
 
         UserPanel.receiveCoffee();

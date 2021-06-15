@@ -36,7 +36,7 @@ public class IngredientManager {
         decreaseIngredient("cocoa", item.needed_cocoa);
         decreaseIngredient("coffeeBeans", item.needed_coffeeBeans);
 
-        Menufacture.getIngredient();
+        Manufacture.getIngredient();
     }
 
     static void increaseIngredient(String ingredient, int additionalAmount){

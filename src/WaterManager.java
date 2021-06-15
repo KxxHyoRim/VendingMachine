@@ -17,7 +17,7 @@ public class WaterManager {
 
     static void dropWater(int needed_waterAmount){
         decreaseWaterAmount(needed_waterAmount);
-        Menufacture.getWater();
+        Manufacture.getWater();
     }
 
     static void decreaseWaterAmount(int needed_waterAmount){
