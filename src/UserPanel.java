@@ -257,6 +257,9 @@ public class UserPanel extends JFrame {
             if (cash != 0){
                 money.setText(String.valueOf(MoneyManager.InputTotalCash) + "원");
             }
+            if (cash == -1 ){
+                money.setText("- - - - - - -");
+            }
         }
     }
 
