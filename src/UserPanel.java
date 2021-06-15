@@ -39,6 +39,7 @@ public class UserPanel extends JFrame {
     static JButton btn500;
     static JButton btn100;
     static JButton btn50;
+    static JButton reset;
 
 
 
@@ -162,6 +163,30 @@ public class UserPanel extends JFrame {
         /** ====== 동전 button end  ======== */
 
 
+        /** reset 버튼 */
+//        reset = new JButton();
+//        reset.setBorder(BorderFactory.createEmptyBorder());
+//        reset.setBackground(Color.BLACK);
+//        reset.setOpaque(false);
+//        reset.setSize(30, 30);
+//        reset.setLocation(470, 520);
+//        panel.add(reset);
+//        reset.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                cash = 0;
+//                MoneyManager.InputTotalCash = 0;
+//                MoneyManager.calcInputCash(0);
+////                for (int i = 0 ; i< menu_num; i++){
+////                    pushLED[i].setEnabled(false);
+////                }
+//                money.setText("- - - - - - -");
+//
+//            }
+//        });
+
+
+
         setAlwaysOnTop(true);
         setLocation(1000, 0);
         setSize(810, 1080);
@@ -265,6 +290,7 @@ public class UserPanel extends JFrame {
             check.setLocation(locX, locY);
             check.setSize(100, 100);
             panel.add(check);
+            check.setVisible(false);
 
             Thread th = new Thread(this);
             th.start();
@@ -278,14 +304,10 @@ public class UserPanel extends JFrame {
                     if(blink == count) return;
                     count++;
                     check.setVisible(true);
-                    System.out.println("yello");
                     setBackground(Color.YELLOW);
                 }
                 else{
                     check.setVisible(false);
-
-                    System.out.println("green");
-
                     setBackground(Color.GREEN);
                 }
                 if (n == 0) n = 1;
@@ -307,6 +329,11 @@ public class UserPanel extends JFrame {
         receive_100won = MoneyManager.change_100won;
         receive_500won = MoneyManager.change_500won;
         receive_1000won = MoneyManager.change_1000won;
+
+        System.out.println("1000원 지폐: " + receive_1000won);
+        System.out.println("500원 동전: " + receive_500won);
+        System.out.println("100원 동전: " + receive_100won);
+        System.out.println("50원 동전: " + receive_50won);
 
         new FlickeringLabel(receive_50won, 650, 590);
         new FlickeringLabel(receive_100won, 650, 510);

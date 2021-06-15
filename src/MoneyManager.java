@@ -5,7 +5,7 @@ import java.util.Set;
 public class MoneyManager {
     static int InputTotalCash = 0;
     /** 수정함 나중에 10으로 바꾸기 */
-    static int coin50 = -1;
+    static int coin50 = 5;
     static int coin100 = 0;
     static int coin500 = 1;
     static int coin1000 = 10;
@@ -30,7 +30,7 @@ public class MoneyManager {
     static void calcInputCash(int cash) {
 
 
-        if(!(cash==50 || cash==100 || cash==500 || cash==1000)){
+        if(!(cash==50 || cash==100 || cash==500 || cash==1000 || cash == 0)){
             input_wrong++;
             UserPanel.receive(true);
             input_wrong = 0;
