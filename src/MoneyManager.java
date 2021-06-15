@@ -5,7 +5,7 @@ import java.util.Set;
 public class MoneyManager {
     static int InputTotalCash = 0;
     /** 수정함 나중에 10으로 바꾸기 */
-    static int coin50 = 5;
+    static int coin50 = 6;
     static int coin100 = 0;
     static int coin500 = 1;
     static int coin1000 = 10;
@@ -56,6 +56,38 @@ public class MoneyManager {
         Controller.checkLEDon(InputTotalCash);
         bool_ledOn = Controller.bool_ledOn;
 
+
+    }
+    static void calcChange(int cash){
+
+        change_1000won = cash/1000;
+        cash = cash%1000;
+        change_500won  = cash/500;
+        cash = cash%500;
+        change_100won = cash/100;
+        cash = cash%100;
+        change_50won = cash/50;
+
+        if (change_1000won > coin1000) {
+            change_1000won -= coin1000;
+            change_500won += change_1000won * 1000 / 500;
+            change_1000won = coin1000;
+        }
+        if (change_500won > coin500) {
+            change_500won -= coin500;
+            change_100won += change_500won * 500 / 100;
+            change_500won = coin500;
+        }
+        if (change_100won > coin100) {
+            change_100won -= coin100;
+            change_50won += change_100won * 100 / 50;
+            change_100won = coin100;
+        }
+
+        System.out.println("1000원 지폐: " + change_1000won);
+        System.out.println("500원 동전: " + change_500won);
+        System.out.println("100원 동전: " + change_100won);
+        System.out.println("50원 동전: " + change_50won);
 
     }
 

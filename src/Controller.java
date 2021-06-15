@@ -98,6 +98,7 @@ public class Controller {
 
         if (noChange)
         {
+            MoneyManager.calcChange(cash);
             MoneyManager.makeReturnCash(MoneyManager.InputTotalCash );
             UserPanel.displayPrompt("No Change");
         }

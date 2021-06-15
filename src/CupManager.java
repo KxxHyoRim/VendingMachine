@@ -10,7 +10,6 @@ public class CupManager {
     static boolean checkCupExists() {
         if ( curCupNumber > 0 )
         {
-            decreaseCupNumber();
             return true;
         }
         else
