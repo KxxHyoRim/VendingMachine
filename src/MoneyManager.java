@@ -12,6 +12,7 @@ public class MoneyManager {
     static int input_100won=0;
     static int input_500won=0;
     static int input_1000won=0;
+    static int input_wrong=0;
     static HashMap<String, Boolean> bool_ledOn = new HashMap<>();
 
     MoneyManager(){
@@ -19,8 +20,12 @@ public class MoneyManager {
 
     static void calcInputCash(int cash) {
 
-        if(!(cash==50 || cash==100 || cash==500 || cash==1000))
-            //UserPanel.receive(cash);
+
+        if(!(cash==50 || cash==100 || cash==500 || cash==1000)){
+            input_wrong++;
+            UserPanel.receive(true);
+            input_wrong = 0;
+        }
 
         //투입된 돈 갯수 count
         switch (cash){
@@ -79,6 +84,6 @@ public class MoneyManager {
         coin500 -= input_500won;
         coin100 -= input_100won;
         coin50 -= input_50won;
-        //UserPanel.receive(cash);
+        UserPanel.receive();
     }
 }

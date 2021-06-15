@@ -11,7 +11,13 @@ public class UserPanel extends JFrame {
     final int MAKING = 2;
     static int menu_num;
 
-    private MyPanel panel = new MyPanel();
+    static int receive_50won;
+    static int receive_100won;
+    static int receive_500won;
+    static int receive_1000won;
+    static int receive_wrong;
+
+    static private  MyPanel panel = new MyPanel();
     static private DataManager dm = new DataManager();
     static HashMap<String, AbsDataManager> list_menu = dm.list_menu;
     static HashMap<String, String> EngToKor = dm.EngToKor;
@@ -21,18 +27,18 @@ public class UserPanel extends JFrame {
     static JButton[] pushLED;
     int[] price;
 
-    int[] locX = {152, 215, 280,152,215, 280,152,215, 280,};
+    int[] locX = {152, 215, 280,152, 215, 280,152,215, 280,};
     int[] locY = {205, 205, 205, 354,354,354,503, 503, 503 };
 
     int cash = 0;
 
-    JLabel status;
-    JLabel money;
-    JButton btnWrong;
-    JButton btn1000;
-    JButton btn500;
-    JButton btn100;
-    JButton btn50;
+    static JLabel status;
+    static JLabel money;
+    static JButton btnWrong;
+    static JButton btn1000;
+    static JButton btn500;
+    static JButton btn100;
+    static JButton btn50;
 
 
 
@@ -230,11 +236,110 @@ public class UserPanel extends JFrame {
         }
     }
 
+    static void receive(Boolean wrong){
+
+        new FlickeringLabel(3, 650, 270);
+
+        /**정상코드*/
+        displayPrompt("반환중");
+
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayPrompt("판매중");
+//                check.setVisible(false);
+            }
+        };
+        Timer timer = new Timer(500, listener);
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+
+    static class FlickeringLabel extends JLabel implements Runnable{
+        int count;
+        int blink;
+        JLabel check = new JLabel(new ImageIcon("check_small.png"));
+
+        public FlickeringLabel(int blink, int locX, int locY){
+            this.blink = blink;
+            check.setLocation(locX, locY);
+            check.setSize(100, 100);
+            panel.add(check);
+
+            Thread th = new Thread(this);
+            th.start();
+        }
+
+        @Override
+        public void run() {
+            int n = 0;
+            while(true){
+                if (n == 0){
+                    if(blink == count) return;
+                    count++;
+                    check.setVisible(true);
+                    System.out.println("yello");
+                    setBackground(Color.YELLOW);
+                }
+                else{
+                    check.setVisible(false);
+
+                    System.out.println("green");
+
+                    setBackground(Color.GREEN);
+                }
+                if (n == 0) n = 1;
+                else n = 0;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    return;
+                }
+
+            }
+        }
+    }
+
+
+
+
+
+
     static void receive(){
+
+        receive_50won = MoneyManager.input_50won;
+        receive_100won = MoneyManager.input_100won;
+        receive_500won = MoneyManager.input_500won;
+        receive_1000won = MoneyManager.input_1000won;
+
+        for(int i = 0 ; i < receive_50won; i++){
+            displayPrompt("반환중");
+            btn50.setBackground(Color.ORANGE);
+            btnWrong.setOpaque(true);
+            ActionListener listener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnWrong.setOpaque(false);
+                    displayPrompt("판매중");
+                }
+            };
+            Timer timer = new Timer(500, listener);
+            timer.setRepeats(false);
+            timer.start();
+        }
+
 
     }
 
     static void displayPrompt(String s){
+        String newS = "";
+        for(int i = 0 ; i < s.length() ; i++){
+            newS += s.charAt(i) + " ";    // 한글자 띄우기
+        }
+        System.out.println(newS);
+        status.setText(newS);
+        panel.repaint();
 
     }
 
@@ -267,7 +372,7 @@ public class UserPanel extends JFrame {
         }
     }
 
-    class MyPanel extends JPanel{
+    static class MyPanel extends JPanel{
         private ImageIcon icon = new ImageIcon("vendingMachineBackground2.png");
         private Image img = icon.getImage();
 
