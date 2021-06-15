@@ -377,7 +377,6 @@ public class UserPanel extends JFrame {
         panel.add(makingCup);
         panel.repaint();
 
-        Controller.getCompleteMessage();
     }
 
     static void receiveCoffee(){
@@ -401,9 +400,7 @@ public class UserPanel extends JFrame {
         timer.setRepeats(false);
         timer.start();
 
-
-
-
+        Controller.getCompleteMessage();
     }
 
     class setMenu extends JFrame{
