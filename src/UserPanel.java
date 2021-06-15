@@ -53,6 +53,8 @@ public class UserPanel extends JFrame {
         c.setLayout(null);
         panel.setLayout(null);
         setContentPane(panel);
+        new MoneyManager();
+        new Controller();
 
         /** 메뉴이름(영어) _ String[] Array */
         Set<String> menuNameSet = list_menu.keySet();       // dataManager의 메뉴 이름 가져오기
